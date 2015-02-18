@@ -15,6 +15,7 @@ public class BinMatrix {
 		Iterator<Bag> b = bags.iterator();
 		while(b.hasNext()){
 			names.put(b.next().bagName(), i);
+			i++;
 		}
 	}
 	

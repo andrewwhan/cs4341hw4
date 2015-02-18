@@ -44,6 +44,7 @@ public class Main{
 				items.add(new Item(s.next(), s.nextInt()));
 			}
 			s.close();
+			line = in.readLine();
 		}
 
 		//First line after the next header
@@ -55,6 +56,7 @@ public class Main{
 				bags.add(new Bag(s.next(), s.nextInt()));
 			}
 			s.close();
+			line = in.readLine();
 		}
 
 		//Fit limit
@@ -66,6 +68,7 @@ public class Main{
 				fitMax = s.nextInt();
 			}
 			s.close();
+			line = in.readLine();
 		}
 
 		//Inclusive unary restraints
@@ -89,6 +92,7 @@ public class Main{
 				}
 			}
 			s.close();
+			line = in.readLine();
 		}
 
 		//Exclusive unary restraints
@@ -103,6 +107,7 @@ public class Main{
 				}
 			}
 			s.close();
+			line = in.readLine();
 		}
 
 		//Binary equals
@@ -124,6 +129,7 @@ public class Main{
 				}
 			}
 			s.close();
+			line = in.readLine();
 		}
 
 		//Binary not equals
@@ -141,11 +147,12 @@ public class Main{
 				}
 			}
 			s.close();
+			line = in.readLine();
 		}
 
 		//Binary mutual exclusive
 		line = in.readLine();
-		while(!line.contains("#####")){
+		while(line != null && !line.contains("#####")){
 			Scanner s = new Scanner(line);
 			if(s.hasNext()){
 				String key = s.next() + s.next();
@@ -159,6 +166,7 @@ public class Main{
 				matrices.get(key).put(bagName2, bagName1, -1);
 			}
 			s.close();
+			line = in.readLine();
 		}
 		in.close();
 	}
