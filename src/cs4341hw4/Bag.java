@@ -5,7 +5,7 @@ public class Bag
 	String name;
 	int size;
 	
-	void createBag(String n, int s)
+	Bag(String n, int s)
 	{
 		name = n;
 		size = s;

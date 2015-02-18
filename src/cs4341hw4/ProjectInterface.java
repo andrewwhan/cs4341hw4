@@ -28,8 +28,7 @@ public class ProjectInterface
 			String name;
 			name = s.next();
 			size = s.nextInt();
-			Item item = new Item();
-			item.createItem(name, size);
+			Item item = new Item(name, size);
 		}
 		s.next();
 		
@@ -40,8 +39,7 @@ public class ProjectInterface
 			String name;
 			name = s.next();
 			size = s.nextInt();
-			Bag bag = new Bag();
-			bag.createBag(name, size);
+			Bag bag = new Bag(name, size);
 		}
 		s.next();
 		

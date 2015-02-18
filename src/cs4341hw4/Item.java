@@ -5,7 +5,7 @@ public class Item
 	String name;
 	int size;
 	
-	void createItem(String n, int s)
+	Item(String n, int s)
 	{
 		name = n;
 		size = s;
