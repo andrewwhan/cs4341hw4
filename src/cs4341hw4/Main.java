@@ -14,13 +14,22 @@ public class Main{
 
 	public static Collection<Item> items = new ArrayList<Item>();
 	public static Collection<Bag> bags = new ArrayList<Bag>();
-	public static int fitMin;
-	public static int fitMax;
+	public static int fitMin = -1;
+	public static int fitMax = 9999;
 	public static HashMap<String, BinMatrix> matrices = new HashMap<String, BinMatrix>();
 
 	public static void main(String args[]) throws IOException{
 		if(args.length > 0){
 			input(args[0]);
+		}
+		Backtrack backtracker = new Backtrack();
+		if(backtracker.base(new HashMap<Item, Bag>())){
+			for(Bag b : bags){
+				b.status();
+			}
+		}
+		else{
+			System.out.println("Bad");
 		}
 	}
 
@@ -171,7 +180,7 @@ public class Main{
 		in.close();
 	}
 
-	private static Item getItem(String s){
+	public static Item getItem(String s){
 		Iterator<Item> i = items.iterator();
 		while(i.hasNext()){
 			Item item = i.next();
@@ -182,7 +191,7 @@ public class Main{
 		return null;
 	}
 
-	private static Bag getBag(String s){
+	public static Bag getBag(String s){
 		Iterator<Bag> i = bags.iterator();
 		while(i.hasNext()){
 			Bag bag = i.next();
