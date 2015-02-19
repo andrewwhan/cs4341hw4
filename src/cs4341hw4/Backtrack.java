@@ -10,8 +10,8 @@ public class Backtrack {
 	int stateCount = 0;
 
 	public boolean base(HashMap<Item, Bag> assigned){
-		stateCount++;
 		if(assigned.keySet().containsAll(Main.items)){
+			stateCount++;
 			return validConfig(assigned);
 		}
 		Item var = unassignedVar(assigned.keySet());
@@ -28,45 +28,39 @@ public class Backtrack {
 	}
 
 	public boolean withHeur(HashMap<Item, Bag> assigned){
-		stateCount++;
 		if(assigned.keySet().containsAll(Main.items)){
-			if(validConfig(assigned)){
-				for(Item i : assigned.keySet()){
-					assigned.get(i).contains.add(i);
-				}
-			}
+			stateCount++;
 			return validConfig(assigned);
 		}
 		Item var = mrv(assigned);
 		for(Bag b : lcv(var, assigned)){
 			HashMap<Item, Bag> next = new HashMap<Item, Bag>(assigned);
 			next.put(var, b);
+			b.contains.add(var);
 			if(withHeur(next)){
 				return true;
 			}
+			b.contains.remove(var);
 		}
 		return false;
 	}
 
 	public boolean withFC(HashMap<Item, Bag> assigned){
-		stateCount++;
 		if(assigned.keySet().containsAll(Main.items)){
-			if(validConfig(assigned)){
-				for(Item i : assigned.keySet()){
-					assigned.get(i).contains.add(i);
-				}
-			}
+			stateCount++;
 			return validConfig(assigned);
 		}
 		Item var = mrv(assigned);
 		for(Bag b : lcv(var, assigned)){
 			HashMap<Item, Bag> next = new HashMap<Item, Bag>(assigned);
 			next.put(var, b);
+			b.contains.add(var);
 			if(infer(next)){
 				if(withFC(next)){
 					return true;
 				}
 			}
+			b.contains.remove(var);
 		}
 		return false;
 	}
