@@ -55,9 +55,19 @@ public class Backtrack {
 			HashMap<Item, Bag> next = new HashMap<Item, Bag>(assigned);
 			next.put(var, b);
 			b.contains.add(var);
-			if(infer(next)){
+			HashMap<Item, Bag> inferences = infer(next);
+			if(inferences != null){
+				for(Item i : inferences.keySet()){
+					Bag bag = inferences.get(i);
+					next.put(i, bag);
+					bag.contains.add(i);
+				}
 				if(withFC(next)){
 					return true;
+				}
+				for(Item i : inferences.keySet()){
+					Bag bag = inferences.get(i);
+					bag.contains.remove(i);
 				}
 			}
 			b.contains.remove(var);
@@ -217,19 +227,20 @@ public class Backtrack {
 		return list;
 	}
 	
-	private boolean infer(Map<Item, Bag> assignments){
+	private HashMap<Item, Bag> infer(Map<Item, Bag> assignments){
 		Set<Item> assigned = assignments.keySet();
 		ArrayList<Item> unassigned = new ArrayList<Item>(Main.items);
 		unassigned.removeAll(assigned);
+		HashMap<Item, Bag> inferences = new HashMap<Item, Bag>();
 		for(Item i : unassigned){
 			Collection<Bag> availableBags = availableBags(i, assignments);
 			if(availableBags.size() == 0){
-				return false;
+				return null;
 			}
 			else if(availableBags.size() == 1){
-				assignments.put(i, availableBags.iterator().next());
+				inferences.put(i, availableBags.iterator().next());
 			}
 		}
-		return true;
+		return inferences;
 	}
 }
