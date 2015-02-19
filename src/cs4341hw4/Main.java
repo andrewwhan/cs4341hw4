@@ -23,7 +23,7 @@ public class Main{
 			input(args[0]);
 		}
 		Backtrack backtracker = new Backtrack();
-		if(backtracker.withHeur(new HashMap<Item, Bag>())){
+		if(backtracker.withFC(new HashMap<Item, Bag>())){
 			for(Bag b : bags){
 				b.status();
 			}
