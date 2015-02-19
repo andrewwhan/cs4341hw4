@@ -28,10 +28,9 @@ public class Main{
 				b.status();
 				System.out.println();
 			}
-			System.out.println(backtracker.stateCount);
 		}
 		else{
-			System.out.println("No solution possible");
+			System.out.println("Bad");
 		}
 	}
 
@@ -202,5 +201,117 @@ public class Main{
 			}
 		}
 		return null;
+	}
+	
+	public boolean minConflicts(int steps)
+	{
+		int conflicts = 0;
+		
+		//assign each item to the bag with the most available space
+		for(Item item: items)
+		{
+			Bag activeBag;
+			Iterator<Bag> bagIterator = bags.iterator();
+			activeBag = bagIterator.next();
+			int smallestSize = activeBag.currentSize();
+			for(Bag b: bags)
+			{
+				if(b.currentSize() < smallestSize)
+				{
+					smallestSize = b.currentSize();
+					activeBag = b;
+				}
+			
+			activeBag.contains.add(item);	
+			}
+		}
+		
+		//loops the process the provided number of times
+		for(int j = 0; j < steps; j++)
+		{
+			Iterator<Item> itemIterator = items.iterator();
+			Item activeItem = itemIterator.next();
+			
+			//count the number of conflicts for a given item and return true if there are no conflicts
+			for(Bag b:bags)
+			{
+				//check the size of the bag
+				if(b.currentSize() > b.bagSize()) {conflicts++;}
+				if(b.currentSize() < (0.9 * b.bagSize())) {conflicts++;}
+				
+				//check for unary conflicts
+				for(Item i:items)
+				{
+					if(b.contains.contains(i))
+					{
+						if(i.badBags.contains(b)){conflicts++;}
+					}
+				}
+				//check for binary conflicts
+				
+			}
+			
+			if(conflicts == 0)
+			{
+				//I'm not sure how to provide list of bags that was correct
+				return true;
+			}
+			
+			//move item to the bag with the least amount of conflicts
+			Bag incorectBag = null;
+			
+			//find the bag with the activeItem and remove it from it
+			for(Bag b:bags)
+			{
+				if(b.contains.contains(activeItem))
+				{
+					b.contains.remove(activeItem);
+					incorectBag = b;
+				}
+			}
+			
+			//place the activeItem in every bag that is not the previous bag and find the bag with the fewest conflicts
+			for(Bag b:bags)
+			{
+				int newConflicts = 0;
+				Bag bestBag = null;
+				if(b != incorectBag)
+				{
+					b.contains.add(activeItem);
+					for(Bag b2:bags)
+					{
+						//check the size of the bag
+						if(b2.currentSize() > b2.bagSize()) {newConflicts++;}
+						if(b2.currentSize() < (0.9 * b2.bagSize())) {newConflicts++;}
+						
+						//check for unary conflicts
+						for(Item i:items)
+						{
+							if(b2.contains.contains(i))
+							{
+								if(i.badBags.contains(b2)){newConflicts++;}
+							}
+						}
+						//ToDo check for binary conflicts
+						if(newConflicts <=conflicts)
+						{
+							//this is a better solution
+							bestBag = b2;
+							conflicts = newConflicts;
+						}
+						else 
+						{
+							newConflicts = 0;
+						}
+					}
+					b.contains.remove(activeItem);
+				}
+				
+				//assign the item to the bag with the least number of conflicts
+				bestBag.contains.add(activeItem);
+			}
+		}
+		//the solution could not be found in the given number of steps
+		return false;
 	}
 }
