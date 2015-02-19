@@ -23,14 +23,16 @@ public class Main{
 			input(args[0]);
 		}
 		Backtrack backtracker = new Backtrack();
-		if(backtracker.base(new HashMap<Item, Bag>())){
+		if(backtracker.withHeur(new HashMap<Item, Bag>())){
 			for(Bag b : bags){
 				b.status();
 				System.out.println();
 			}
+			System.out.println(backtracker.stateCount);
 		}
 		else{
-			System.out.println("Bad");
+			System.out.println("No solution possible");
+			System.out.println(backtracker.stateCount);
 		}
 	}
 
