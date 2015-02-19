@@ -25,16 +25,30 @@ public class Bag
 		return size;
 	}
 	
-	public void status(){
-		System.out.print(name + " ");
+	public int itemCount(){
+		return contains.size();
+	}
+	
+	public int filled(){
 		int w = 0;
 		for(Item i : contains){
-			System.out.print(i.name + " ");
 			w += i.size;
+		}
+		return w;
+	}
+	
+	public void status(){
+		System.out.print(name + " ");
+		for(Item i : contains){
+			System.out.print(i.name + " ");
 		}
 		System.out.println();
 		System.out.println("Number of items: " + contains.size());
-		System.out.println("Total weight: " + w + "/" + size);
-		System.out.println("Wasted capacity: " + (size-w));
+		System.out.println("Total weight: " + filled() + "/" + size);
+		System.out.println("Wasted capacity: " + (size-filled()));
+	}
+	
+	public String toString(){
+		return "[" + name + "]";
 	}
 }
