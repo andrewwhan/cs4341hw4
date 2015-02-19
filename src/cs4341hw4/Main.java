@@ -250,7 +250,11 @@ public class Main{
 					}
 				}
 				//check for binary conflicts
-				
+				for(String key : matrices.keySet())
+				{
+					//From the key, get the two items involved. Check and make sure the bags the two items are in aren't restricted by the BinMatrix
+					if(matrices.get(key).get(matrices.get(getItem(key.substring(0,1))).toString(), matrices.get(getItem(key.substring(1,2))).toString()) == -1) {conflicts++;}
+				}
 			}
 			
 			if(conflicts == 0)
@@ -294,7 +298,13 @@ public class Main{
 								if(i.badBags.contains(b2)){newConflicts++;}
 							}
 						}
-						//ToDo check for binary conflicts
+						//check for binary conflicts
+						for(String key : matrices.keySet())
+						{
+							//From the key, get the two items involved. Check and make sure the bags the two items are in aren't restricted by the BinMatrix
+							if(matrices.get(key).get(matrices.get(getItem(key.substring(0,1))).toString(), matrices.get(getItem(key.substring(1,2))).toString()) == -1) {newConflicts++;}
+						}
+						
 						if(newConflicts <=conflicts)
 						{
 							//this is a better solution
